@@ -6,12 +6,12 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # OAuth2 config
-CLIENT_ID = '1333789231428014100'
-CLIENT_SECRET = '3CeH0oHQEyeXkvt8T19SIWSaijQjORAE'
-REDIRECT_URI = 'https://mel-random.onrender.com/callback'
+CLIENT_ID = 'BOT_CLIENT_ID'
+CLIENT_SECRET = 'BOT_CLIENT_SECRET'
+REDIRECT_URI = 'https://yoursite.com/callback'
 API_BASE_URL = 'https://discord.com/api'
 
-WHITELIST = {'1161684613190647889', '1012485504672993370', '709028487096303646'}
+WHITELIST = {'ID1', 'ID2' } # И т.д
 
 def get_token(code):
     data = {
