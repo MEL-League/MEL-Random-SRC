@@ -1,0 +1,316 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  min-height: 200vh;
+  background: linear-gradient(180deg, #0d0d0d, #1c0030);
+  background-size: 100% 300%;
+  animation: scrollGradient 10s linear infinite alternate;
+}
+
+@keyframes scrollGradient {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% 100%;
+  }
+}
+
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.5); }
+}
+
+.user-info {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  z-index: 10;
+  background: rgba(30, 0, 60, 0.7);
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #8a2be2aa;
+}
+
+.user-info img.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 10px #9370dbaa;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.user-info .user-text {
+  display: flex;
+  flex-direction: column;
+  color: #d0c9f6;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.user-info a {
+  color: #9b84ff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: color 0.3s;
+  user-select: none;
+}
+
+.user-info a:hover {
+  color: #c5a3ff;
+  text-decoration: underline;
+}
+
+
+.container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-top: 120px;
+}
+
+.portal {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, #4b0082, #000);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 50px #8a2be2aa, inset 0 0 60px #9400d3aa;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 40px #8a2be2aa, inset 0 0 50px #9400d3aa;
+  }
+  50% {
+    box-shadow: 0 0 80px #8a2be2, inset 0 0 90px #9400d3;
+  }
+}
+
+.shake {
+  animation: bigShake 0.5s ease;
+}
+
+@keyframes bigShake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-10px, 6px); }
+  30% { transform: translate(8px, -12px); }
+  50% { transform: translate(-8px, 8px); }
+  70% { transform: translate(6px, -6px); }
+  90% { transform: translate(-4px, 4px); }
+}
+
+.item {
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: all 0.5s ease-out;
+  z-index: 10;
+  user-select: none;
+}
+
+.item.show {
+  transform: translate(-50%, -50%) scale(1.8) rotate(10deg); /* чуть больше */
+  opacity: 1;
+  animation: pop 0.6s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1) rotate(-90deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(2) rotate(15deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+}
+
+button {
+  margin-top: 50px;
+  padding: 12px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(45deg, #6a5acd, #483d8b);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 12px #9370db;
+  transition: background 0.3s;
+  z-index: 2;
+  user-select: none;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ff00ff;
+  border-radius: 50%;
+  animation: fly 1s ease-out forwards;
+}
+
+@keyframes fly {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% {
+    transform: translate(calc(-150px + 300px * var(--rand-x)), calc(-150px + 300px * var(--rand-y))) scale(0.1);
+    opacity: 0;
+  }
+}
+
+
+/* ------------------ */
+/* Мобильная версия - под телефон */
+/* ------------------ */
+@media (max-width: 600px) {
+  html, body {
+    min-height: 100vh;
+    background-size: 100% 150%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px;
+  }
+
+  .user-info {
+    position: static;
+    margin-bottom: 30px;
+    background: rgba(30, 0, 60, 0.85);
+    padding: 12px 20px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px #8a2be2cc;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .user-info img.avatar {
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 0 12px #9370ddee;
+  }
+
+  .user-info .user-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #d0c9f6;
+    line-height: 1.2;
+  }
+
+  .user-info a {
+    font-size: 15px;
+    font-weight: 700;
+    color: #9b84ff;
+  }
+
+
+  .container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0;
+  }
+
+
+  .portal {
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: radial-gradient(circle, #4b0082, #000);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 70px #8a2be2cc, inset 0 0 80px #9400d3cc;
+    animation: pulse 2s infinite ease-in-out;
+  }
+
+
+  .item {
+    font-size: 26px;
+    font-weight: 700;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: all 0.5s ease-out;
+    z-index: 10;
+    user-select: none;
+  }
+
+  .item.show {
+    transform: translate(-50%, -50%) scale(1.8) rotate(10deg);
+    opacity: 1;
+    animation: pop 0.6s ease-out;
+  }
+
+
+  button {
+    margin-top: 40px;
+    padding: 16px 40px;
+    font-size: 22px;
+    border-radius: 16px;
+    box-shadow: 0 0 18px #9370db;
+    cursor: pointer;
+    user-select: none;
+  }
+
+
+  .particle {
+    width: 6px;
+    height: 6px;
+  }
+}
+

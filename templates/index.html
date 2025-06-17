@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Магический Рандом</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div id="stars"></div>
+
+{% if user %}
+  <div class="user-info">
+    <img class="avatar" src="https://cdn.discordapp.com/avatars/{{ user.id }}/{{ user.avatar }}.png" alt="Аватар пользователя">
+    <div class="user-text">
+      <p>👤 Вы вошли как {{ user.global_name }}</p>
+      <a href="{{ url_for('logout') }}">Выйти</a>
+    </div>
+  </div>
+{% else %}
+  <div class="user-info">
+    <a href="{{ url_for('login') }}">Войти через Discord</a>
+  </div>
+{% endif %}
+
+  {% if allowed %}
+    <div class="container">
+      <div class="portal" id="portal">
+        <div class="item" id="item">🎁</div>
+      </div>
+      <button id="btn" onclick="reveal()">🌌 Вытащить предмет</button>
+    </div>
+  {% else %}
+    <p style="color: #ff4444; text-align: center; margin-top: 150px;">
+      🚫 У вас нет доступа к вращению. Обратитесь к администратору.
+    </p>
+  {% endif %}
+
+  <script>
+    const itemEl = document.getElementById('item');
+    const portal = document.getElementById('portal');
+    const button = document.getElementById('btn');
+    let cooldown = false;
+
+    async function reveal() {
+      if (cooldown) return;
+      cooldown = true;
+      button.disabled = true;
+
+      portal.classList.add('shake');
+      itemEl.classList.remove('show');
+      void itemEl.offsetWidth;
+
+      try {
+        const res = await fetch('/spin');
+        const data = await res.json();
+
+        if (data.error) {
+          alert("Ошибка: " + data.error);
+          cooldown = false;
+          button.disabled = false;
+          return;
+        }
+
+        itemEl.textContent = data.item;
+
+        if (data.item === 'Wolverhampton') {
+          itemEl.style.fontSize = '20px';
+        } else {
+          itemEl.style.fontSize = '28px';
+        }
+
+        for (let i = 0; i < 40; i++) {
+          const p = document.createElement('div');
+          p.className = 'particle';
+          p.style.setProperty('--rand-x', Math.random());
+          p.style.setProperty('--rand-y', Math.random());
+          p.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+          p.style.left = '50%';
+          p.style.top = '50%';
+          portal.appendChild(p);
+          setTimeout(() => portal.removeChild(p), 1000);
+        }
+
+        setTimeout(() => {
+          itemEl.classList.add('show');
+          portal.classList.remove('shake');
+        }, 500);
+
+      } catch (err) {
+        console.error("Ошибка при получении предмета:", err);
+        alert("Ошибка сервера");
+      }
+
+      setTimeout(() => {
+        cooldown = false;
+        button.disabled = false;
+      }, 3000);
+    }
+
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 200; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.top = `${Math.random() * 100}%`;
+      s.style.left = `${Math.random() * 100}%`;
+      s.style.animationDelay = `${Math.random() * 2}s`;
+      s.style.opacity = Math.random();
+      stars.appendChild(s);
+    }
+  </script>
+</body>
+</html>
