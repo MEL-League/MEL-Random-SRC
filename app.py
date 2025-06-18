@@ -72,7 +72,6 @@ ITEMS = [
     "Cleveland Cavaliers",
     "Melbourne",
     "Ac. Losc Lille",
-    "Chelsea",
     "Wolverhampton", #1
     "Scarlet Devils",
     "Bayern Munchen",
