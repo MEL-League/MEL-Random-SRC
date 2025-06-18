@@ -29,5 +29,5 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/MEL-Random/MEL-Random.git
+   git clone https://github.com/MEL-Random/MEL-Random-SRC.git
    cd MEL-Random
